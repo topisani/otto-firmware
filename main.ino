@@ -1,13 +1,18 @@
-#include <WS2812B.h>
+#include "OTTO_WS2812B.hpp"
 
 #include "common.hpp"
 #include "leds.hpp"
 #include "keys.hpp"
 
-Keys keys;
+namespace otto_mcu {
+  Keys keys;
+}
+
+using namespace otto_mcu;
 
 void setup() {
-  afio_cfg_debug_ports(AFIO_DEBUG_NONE);
+  // Disable debug ports. Lets us use pins for key matrix.
+  afio_cfg_debug_ports(AFIO_DEBUG_SW_ONLY);
   Serial.begin(9600);
   delay(1000);
   log("USB SERIAL IS UP");
@@ -16,7 +21,7 @@ void setup() {
   leds.setup();
   keys.setup();
   log("Testing LEDs one by one");
-  //leds.test();
+  leds.test();
   log("Done testing LEDs.");
 }
 
