@@ -14,7 +14,7 @@ struct Keys {
   static constexpr int ncols = 7;
   static constexpr int nrows = 8;
 
-  GPIOPin columns[ncols] = {{GPIOA, 9}, {GPIOC, 10}, {GPIOB, 5}, {GPIOA, 15, true},
+  GPIOPin columns[ncols] = {{GPIOA, 9}, {GPIOC, 10}, {GPIOB, 5}, {GPIOA, 15},
                             {GPIOC, 0}, {GPIOC, 1},  {GPIOC, 3}};
   GPIOPin rows[nrows] = {{GPIOC, 11}, {GPIOC, 2}, {GPIOB, 4}, {GPIOA, 10},
                          {GPIOB, 3},  {GPIOD, 2}, {GPIOA, 8}, {GPIOC, 12}};
@@ -112,9 +112,9 @@ struct Keys {
         bool new_val = (key.state = rows[j].read());
         if (new_val != old_val) {
           if (new_val) {
-            log("DOWN: C%d:R%d %s", i, j, key.name);
+            log("DOWN: C%d:R%d %s", i+1, j+1, key.name);
           } else {
-            log("  UP: C%d:R%d %s", i, j, key.name);
+            log("  UP: C%d:R%d %s", i+1, j+1, key.name);
           }
         }
         leds.setPixelColor(key.led, key.state ? LEDStrip::Color(255, 0, 255) : LEDStrip::Color(0, 0, 0));

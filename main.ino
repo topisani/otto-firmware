@@ -7,6 +7,7 @@
 Keys keys;
 
 void setup() {
+  afio_cfg_debug_ports(AFIO_DEBUG_NONE);
   Serial.begin(9600);
   delay(1000);
   log("USB SERIAL IS UP");
