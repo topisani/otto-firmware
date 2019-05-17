@@ -61,6 +61,7 @@ namespace otto_mcu {
     } else {
       numLEDs = numBytes = 0;
     }
+    changed = true;
   }
 
   /*Sets a specific pixel to a specific r,g,b colour
@@ -86,11 +87,13 @@ namespace otto_mcu {
     *bptr++ = *tPtr++;
     *bptr++ = *tPtr++;
     *bptr++ = *tPtr++;
+    changed = true;
   }
 
   // Sends the current buffer to the leds
   void WS2812B::Group::show(WS2812B& controler)
   {
+    if (!changed) return;
     controler.select(*this);
     // Start the DMA transfer of the current pixel
     // buffer to the LEDs and return immediately.
@@ -112,6 +115,7 @@ namespace otto_mcu {
       memcpy(pixels, doubleBuffer + numBytes,
              numBytes); // copy second buffer to first buffer
     }
+    changed = false;
   }
 
   /*
@@ -129,6 +133,7 @@ namespace otto_mcu {
       *bptr++ = *tPtr++;
       *bptr++ = *tPtr++;
     }
+    changed = true;
   }
 
   uint16_t WS2812B::Group::numPixels(void) const

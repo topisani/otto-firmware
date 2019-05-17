@@ -95,6 +95,7 @@ namespace otto_mcu {
       uint8_t* pixels = nullptr;
       uint16_t numLEDs = 0;  // Number of RGB LEDs in strip
       uint16_t numBytes = 0; // Size of 'pixels' buffer
+      bool changed = true;
 
       uint8_t* doubleBuffer = nullptr; // Holds the start of the double buffer (1 buffer for async
                                        // DMA transfer and one for the API interaction.

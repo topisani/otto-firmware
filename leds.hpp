@@ -78,7 +78,6 @@ namespace otto_mcu {
     void test()
     {
       auto step_through = [&](WS2812B::Group& group) {
-        log("Group with %d pixels, bytes = %d", group.numPixels(), group.numBytes);
         for (int i = 0; i < group.numPixels(); i++) {
           group.clear();
           group.setPixelColor(i, 255, 0, 0);

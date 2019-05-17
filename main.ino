@@ -3,9 +3,11 @@
 #include "common.hpp"
 #include "leds.hpp"
 #include "keys.hpp"
+#include "encoders.hpp"
 
 namespace otto_mcu {
   Keys keys;
+  Encoders encoders;
 }
 
 using namespace otto_mcu;
@@ -20,11 +22,13 @@ void setup() {
 
   leds.setup();
   keys.setup();
+  encoders.setup();
   log("Testing LEDs one by one");
-  leds.test();
+  //leds.test();
   log("Done testing LEDs.");
 }
 
 void loop() {
   keys.loop();
+  encoders.loop();
 }
