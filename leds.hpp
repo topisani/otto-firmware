@@ -4,33 +4,45 @@
 
 namespace otto_mcu {
 
-//  struct LEDStrip {
-//    LEDStrip(GPIOPin pin, int count) : cs_pin(pin), count(count) {}
-//
-//    void setup()
-//    {
-//      cs_pin.set_output(true);
-//    }
-//
-//    void colorWipe(uint32_t c, uint8_t wait)
-//    {
-//      for (uint16_t i = 0; i < strip.numPixels(); i++) {
-//        strip.setPixelColor(i, c);
-//        strip.show();
-//        delay(wait);
-//      }
-//    }
-//
-//    static uint32_t Color(uint8_t r, uint8_t g, uint8_t b)
-//    {
-//      return ((uint32_t) g << 16) | ((uint32_t) r << 8) | b;
-//    }
-//
-//    int count = 0;
-//    GPIOPin cs_pin;
-//    WS2812B& strip = ws2812b_global;
-//    ;
-//  };
+  //  struct LEDStrip {
+  //    LEDStrip(GPIOPin pin, int count) : cs_pin(pin), count(count) {}
+  //
+  //    void setup()
+  //    {
+  //      cs_pin.set_output(true);
+  //    }
+  //
+  //    void colorWipe(uint32_t c, uint8_t wait)
+  //    {
+  //      for (uint16_t i = 0; i < strip.numPixels(); i++) {
+  //        strip.setPixelColor(i, c);
+  //        strip.show();
+  //        delay(wait);
+  //      }
+  //    }
+  //
+  //    static uint32_t Color(uint8_t r, uint8_t g, uint8_t b)
+  //    {
+  //      return ((uint32_t) g << 16) | ((uint32_t) r << 8) | b;
+  //    }
+  //
+  //    int count = 0;
+  //    GPIOPin cs_pin;
+  //    WS2812B& strip = ws2812b_global;
+  //    ;
+  //  };
+
+
+  struct LEDColor {
+    LEDColor(uint32_t rgb) : r((rgb >> 16) & 0xFF), g((rgb >> 8) & 0xFF), b(rgb & 0xFF){};
+    LEDColor(uint8_t r, uint8_t g, uint8_t b) : r(r), g(g), b(b) {}
+
+    operator uint32_t() {
+      return r << 16 | g << 8 | b;
+    }
+
+    uint8_t r = 0, g = 0, b = 0;
+  };
 
   struct Leds {
     void setup()
@@ -59,20 +71,20 @@ namespace otto_mcu {
 
     void rainbow()
     {
-//      uint16_t i, j;
-//
-//      for (j = 0; j < 256; j++) {
-//        auto set_cols = [&](WS2812B& strip) {
-//          for (i = 0; i < strip.numPixels(); i++) {
-//            strip.setPixelColor(i, Wheel(j));
-//          }
-//          strip.show();
-//        };
-//        set_cols(funcs().strip);
-//        set_cols(channels().strip);
-//        set_cols(seq().strip);
-//        delay(5);
-//      }
+      //      uint16_t i, j;
+      //
+      //      for (j = 0; j < 256; j++) {
+      //        auto set_cols = [&](WS2812B& strip) {
+      //          for (i = 0; i < strip.numPixels(); i++) {
+      //            strip.setPixelColor(i, Wheel(j));
+      //          }
+      //          strip.show();
+      //        };
+      //        set_cols(funcs().strip);
+      //        set_cols(channels().strip);
+      //        set_cols(seq().strip);
+      //        delay(5);
+      //      }
     }
 
     void test()
@@ -90,6 +102,11 @@ namespace otto_mcu {
       step_through(controler.group(LEDGroup::funcs));
       step_through(controler.group(LEDGroup::channels));
       step_through(controler.group(LEDGroup::seq));
+    }
+
+    void loop()
+    {
+      controler.show();
     }
 
     WS2812B controler = {{{GPIOA, 4}, 21}, {{GPIOC, 4}, 10}, {{GPIOC, 5}, 16}};

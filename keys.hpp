@@ -127,13 +127,23 @@ namespace otto_mcu {
               Serial.write('\n');
             }
           }
-          leds.controler.setPixelColor(
-            key.led, key.state ? WS2812B::Color(255, 0, 0) : WS2812B::Color(16, 16, 16));
+          // leds.controler.setPixelColor( key.led, key.state ? WS2812B::Color(255, 0, 0) :
+          // WS2812B::Color(16, 16, 16));
         }
         col.write(false);
         delay(10);
       }
-      leds.controler.show();
+    }
+
+    KeyDef* get_key(uint8_t code)
+    {
+      for (int i = 0; i < ncols; i++) {
+        for (int j = 0; j < nrows; j++) {
+          auto& key = keys[i][j];
+          if (key.code == code) return &key;
+        }
+      }
+      return nullptr;
     }
   };
 } // namespace otto_mcu

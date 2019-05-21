@@ -8,10 +8,11 @@ namespace otto_mcu {
   template<typename... Args>
   void log(const char* msg, Args... args)
   {
-    //char buffer[256];
-    //sprintf(buffer, msg, args...);
-    //Serial.println(buffer);
-    //Serial.flush();
+    char buffer[256];
+    sprintf(buffer, msg, args...);
+    Serial.write('#');
+    Serial.println(buffer);
+    Serial.flush();
   }
 
   inline void wait_for_input()
